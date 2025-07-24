@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // 1. Adicionei TouchableOpacity à importação
-import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity, Platform } from "react-native";
 import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -13,9 +13,9 @@ export default function RegistroScreen() {
   const [error, setError] = useState("");
 
   // Dentro do arquivo app/register.tsx
-  const [,setIsEmailFocused] = useState(false);
-  const [,setIsUserFocused] = useState(false);
-  const [ ,setIsPasswordFocused] = useState(false);
+  const [isEmailFocused ,setIsEmailFocused] = useState(false);
+  const [isUserFocused ,setIsUserFocused] = useState(false);
+  const [isPasswordFocused ,setIsPasswordFocused] = useState(false);
 
   const handleRegistro = () => {
     console.log("1. Botão pressionado. Iniciando a função handleRegistro.");
@@ -56,7 +56,7 @@ export default function RegistroScreen() {
     <ThemedView style={styles.container}>
       <ThemedText type="title">Crie sua Conta</ThemedText>
       <TextInput
-        style={styles.input}
+        style={[styles.input, isEmailFocused && styles.inputFocused,]}
         placeholder="Digite seu e-mail"
         value={email}
         onChangeText={setEmail}
@@ -67,7 +67,7 @@ export default function RegistroScreen() {
       />
 
       <TextInput
-        style={styles.input}
+        style={[styles.input, isUserFocused && styles.inputFocused]}
         placeholder="Nome de Usuário"
         value={userName}
         onChangeText={setUserName}
@@ -76,7 +76,7 @@ export default function RegistroScreen() {
       />
 
       <TextInput
-        style={styles.input}
+        style={[styles.input, isPasswordFocused && styles.inputFocused]}
         placeholder="Digite sua senha"
         value={password}
         onChangeText={setPassword}
@@ -102,15 +102,29 @@ const styles = StyleSheet.create({
   },
   input: {
     height: "10%",
-    borderColor: "gray",
-    borderWidth: 2,
+    borderColor: "#ffffff9e",
+    borderWidth: 1,
     borderRadius: 18,
     paddingHorizontal: 15,
     width: "100%",
-    color: "white",
+    color: "#ffffff43",
     fontSize: 16,
+    ...Platform.select({
+      web: {
+        // Estes estilos serão aplicados SOMENTE na web
+        outlineStyle: 'none'
+      }
+    })
   },
+  
   // Adicionei estilos para o nosso novo botão customizado
+  inputFocused: {
+    color: '#ffffffff',
+    borderColor: "#ffffffff",
+    borderWidth: 2,
+  },
+
+  
   button: {
     backgroundColor: "#0a7ea4", // Cor do template
     paddingVertical: 12,
@@ -119,7 +133,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonText: {
-    color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
   },
