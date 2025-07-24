@@ -12,7 +12,7 @@ export default function HomeScreen() {
       <ThemedText>Aqui começaremos nosso app!</ThemedText>
 
       {/* ADICIONE ESTE LINK AQUI */}
-      <Link href="/(tabs)/register" style={styles.link}>
+      <Link href="/register" style={styles.link}>
         <ThemedText type="link">Ir para Registro</ThemedText>
       </Link>
     </ThemedView>
