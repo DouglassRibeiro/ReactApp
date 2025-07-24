@@ -1,46 +1,39 @@
-import React, { useState } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
-import { useRouter, Link } from "expo-router";
-
-
+import { CustomTextInput } from "@/components/CustomTextInput";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { CustomTextInput } from "@/components/CustomTextInput"; // 1. Importamos nosso novo componente
+import { Link, useRouter } from "expo-router";
+import React, { useState } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
-export default function RegistroScreen() {
+export default function LoginScreen() {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
-  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const [isEmailFocused, setIsEmailFocused] = useState(false);
-  const [isUserFocused, setIsUserFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
-  const handleRegistro = () => {
-    setError("");
-    if (!email || !userName || !password) {
-      setError("Por favor, preencha todos os campos.");
+  const handleLogin = () => {
+    // Por enquanto, a lógica é a mesma do registro.
+    // Futuramente, aqui você verificaria os dados em um banco de dados.
+    setError('');
+    if (!email || !password) {
+      setError('Por favor, preencha todos os campos.');
       return;
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError("Por favor, insira um e-mail válido.");
-      return;
-    }
+    // Simplesmente navegamos para a tela de boas-vindas com um nome fixo
     router.push({
       pathname: "/welcome",
-      params: { userName: userName },
+      params: { userName: "Usuário" },
     });
   };
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="title">Crie sua Conta</ThemedText>
+      <ThemedText type="title">Login</ThemedText>
 
-      {/* 2. Substituímos os TextInputs antigos pelos nossos novos componentes animados */}
       <CustomTextInput
         isFocused={isEmailFocused}
         placeholder="Digite seu e-mail"
@@ -50,15 +43,6 @@ export default function RegistroScreen() {
         autoCapitalize="none"
         onFocus={() => setIsEmailFocused(true)}
         onBlur={() => setIsEmailFocused(false)}
-      />
-
-      <CustomTextInput
-        isFocused={isUserFocused}
-        placeholder="Nome de Usuário"
-        value={userName}
-        onChangeText={setUserName}
-        onFocus={() => setIsUserFocused(true)}
-        onBlur={() => setIsUserFocused(false)}
       />
 
       <CustomTextInput
@@ -73,22 +57,19 @@ export default function RegistroScreen() {
 
       {error ? <ThemedText style={styles.errorText}>{error}</ThemedText> : null}
 
-      <TouchableOpacity style={styles.button} onPress={handleRegistro}>
-        <ThemedText style={styles.buttonText}>Registrar</ThemedText>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <ThemedText style={styles.buttonText}>Entrar</ThemedText>
       </TouchableOpacity>
 
-      <Link href="/login" asChild>
+      <Link href="/register" asChild>
         <TouchableOpacity>
-          <ThemedText>
-            Já tem uma conta? Faça login
-          </ThemedText>
+          <ThemedText style={styles.linkText}>Não tem uma conta? Cadastre-se</ThemedText>
         </TouchableOpacity>
       </Link>
     </ThemedView>
   );
 }
 
-// 3. O StyleSheet ficou mais simples, sem a necessidade do 'inputFocused'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -104,7 +85,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -112,4 +93,9 @@ const styles = StyleSheet.create({
     color: "red",
     textAlign: "center",
   },
+  linkText: {
+    color: '#0a7ea4',
+    textAlign: 'center',
+    marginTop: 20,
+  }
 });

@@ -1,19 +1,18 @@
 // No topo do arquivo, adicione a importação do Link
-import { Link } from 'expo-router';
-import { StyleSheet } from 'react-native';
+import { Link } from "expo-router";
+import { StyleSheet } from "react-native";
 
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
 
 export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="title">Tela Principal</ThemedText>
-      <ThemedText>Aqui começaremos nosso app!</ThemedText>
-
-      {/* ADICIONE ESTE LINK AQUI */}
       <Link href="/register" style={styles.link}>
-        <ThemedText type="link">Ir para Registro</ThemedText>
+        <ThemedText type="link">Criar Conta</ThemedText>
+      </Link>
+      <Link href="/login" style={styles.link}>
+        <ThemedText type="link">Fazer Login</ThemedText>
       </Link>
     </ThemedView>
   );
@@ -22,12 +21,12 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   // Adicione este novo estilo para o link
   link: {
     marginTop: 20,
     paddingVertical: 10,
-  }
+  },
 });
