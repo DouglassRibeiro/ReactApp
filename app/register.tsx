@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 // 1. Adicionei TouchableOpacity à importação
-import { StyleSheet, TextInput, Alert, TouchableOpacity } from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-
 export default function RegistroScreen() {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(''); 
+  const [error, setError] = useState("");
 
   // Dentro do arquivo app/register.tsx
+  const [,setIsEmailFocused] = useState(false);
+  const [,setIsUserFocused] = useState(false);
+  const [ ,setIsPasswordFocused] = useState(false);
 
   const handleRegistro = () => {
     console.log("1. Botão pressionado. Iniciando a função handleRegistro.");
@@ -22,7 +23,7 @@ export default function RegistroScreen() {
 
     // Verificação de campos vazios
     if (!email || !userName || !password) {
-      console.error("ERRO: Um ou mais campos estão vazios."); // Usamos console.error para erros
+      console.error("ERRO: Um ou mais campos estão vazios.");
       setError("Por favor, preencha todos os campos.");
       return;
     }
@@ -61,48 +62,52 @@ export default function RegistroScreen() {
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
+        onFocus={() => setIsEmailFocused(true)}
+        onBlur={() => setIsEmailFocused(false)}
       />
+
       <TextInput
         style={styles.input}
         placeholder="Nome de Usuário"
         value={userName}
         onChangeText={setUserName}
+        onFocus={() => setIsUserFocused(true)}
+        onBlur={() => setIsUserFocused(false)}
       />
+
       <TextInput
         style={styles.input}
         placeholder="Digite sua senha"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+        onFocus={() => setIsPasswordFocused(true)}
+        onBlur={() => setIsPasswordFocused(false)}
       />
-
-      {error ? (
-        <ThemedText style={styles.errorText}>{error}</ThemedText>
-      ) : null}
 
       {/* 2. Substituímos o <Button> por este bloco */}
       <TouchableOpacity style={styles.button} onPress={handleRegistro}>
         <ThemedText style={styles.buttonText}>Registrar</ThemedText>
       </TouchableOpacity>
+      {error ? <ThemedText style={styles.errorText}>{error}</ThemedText> : null}
     </ThemedView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     padding: 20,
-    gap: 10, // Adicionei um espaçamento entre os elementos
+    gap: 15, // Adicionei um espaçamento entre os elementos
   },
   input: {
-    height: 44,
+    height: "10%",
     borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 8,
+    borderWidth: 2,
+    borderRadius: 18,
     paddingHorizontal: 15,
     width: "100%",
-    backgroundColor: "#fff",
+    color: "white",
     fontSize: 16,
   },
   // Adicionei estilos para o nosso novo botão customizado
@@ -119,8 +124,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   errorText: {
-    color: 'red',
-    textAlign: 'center',
+    color: "red",
+    textAlign: "center",
     marginBottom: 10,
-  }
+  },
 });
