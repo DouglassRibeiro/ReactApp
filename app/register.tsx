@@ -33,7 +33,7 @@ export default function RegistroScreen() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       console.error("ERRO: Formato de e-mail inválido.");
-      Alert.alert("Erro", "Por favor, insira um e-mail válido.");
+      setError("Por favor, insira um e-mail válido.");
       return;
     }
 
@@ -76,6 +76,10 @@ export default function RegistroScreen() {
         secureTextEntry
       />
 
+      {error ? (
+        <ThemedText style={styles.errorText}>{error}</ThemedText>
+      ) : null}
+
       {/* 2. Substituímos o <Button> por este bloco */}
       <TouchableOpacity style={styles.button} onPress={handleRegistro}>
         <ThemedText style={styles.buttonText}>Registrar</ThemedText>
@@ -114,4 +118,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  errorText: {
+    color: 'red',
+    textAlign: 'center',
+    marginBottom: 10,
+  }
 });
