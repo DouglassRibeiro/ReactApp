@@ -13,6 +13,7 @@ export default function RootLayout() {
           backgroundColor: colorScheme === "dark" ? "#151718" : "#fff",
         },
         headerTintColor: colorScheme === "dark" ? "#fff" : "#11181C",
+        headerBackTitleVisible: false,
         ...Platform.select({
           ios: {
             headerBackTitleVisible: false,
