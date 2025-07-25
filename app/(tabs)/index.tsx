@@ -8,10 +8,10 @@ import { ThemedView } from "@/components/ThemedView";
 export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
-      <Link href="/register" style={styles.link}>
+      <Link href="../(auth)/register" style={styles.link}>
         <ThemedText type="link">Criar Conta</ThemedText>
       </Link>
-      <Link href="/login" style={styles.link}>
+      <Link href="../(auth)/login" style={styles.link}>
         <ThemedText type="link">Fazer Login</ThemedText>
       </Link>
     </ThemedView>
